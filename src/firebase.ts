@@ -6,10 +6,10 @@ import {
   setDoc,
   getDocs,
   deleteDoc,
-  onSnapshot,
-  getDocFromServer
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import firebaseConfigJSON from "../firebase-applet-config.json";
 
 // App ID resolution
 export const getAppId = (): string => {
@@ -18,25 +18,20 @@ export const getAppId = (): string => {
     if (win.appletId) return win.appletId;
     if (win.__APP_ID__) return win.__APP_ID__;
   }
-  return "586522d1-9ce2-4832-b8a5-7704c9bf8815"; // Fallback Applet ID
+  return firebaseConfigJSON.appId ? "586522d1-9ce2-4832-b8a5-7704c9bf8815" : "586522d1-9ce2-4832-b8a5-7704c9bf8815";
 };
 
-// Fallback Firebase Configuration
-const fallbackConfig = {
-  apiKey: "AIzaSyDemoConfigKeyForDhammaApp12345",
-  authDomain: "dhamma-review-app.firebaseapp.com",
-  projectId: "dhamma-review-app",
-  storageBucket: "dhamma-review-app.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
-};
-
-// Initialize Firebase App & Services
+// Config resolution
 const firebaseConfig =
-  (typeof window !== "undefined" && (window as any).firebaseConfig) || fallbackConfig;
+  (typeof window !== "undefined" && (window as any).firebaseConfig) || firebaseConfigJSON;
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-export const db = getFirestore(app);
+
+// CRITICAL: Specify the provisioned database ID
+export const db = firebaseConfig.firestoreDatabaseId
+  ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+  : getFirestore(app);
+
 export const auth = getAuth(app);
 
 // Silent Anonymous Authentication
@@ -50,17 +45,6 @@ export const ensureAuthenticated = async () => {
     });
   }
   return authPromise;
-};
-
-// Test Connection Helper
-export const testFirestoreConnection = async () => {
-  try {
-    await ensureAuthenticated();
-    const appId = getAppId();
-    await getDocFromServer(doc(db, "artifacts", appId, "public", "data"));
-  } catch (err) {
-    console.warn("Firestore connectivity status:", err);
-  }
 };
 
 // Get Evaluations Collection Path
@@ -129,9 +113,9 @@ export const saveEvaluationToCloud = async (formData: any, docId?: string): Prom
     categories: formData.categories || [],
     mahapadesa: formData.mahapadesa || {},
     legal: formData.legal || {},
-    verdict: formData.verdict || "pending_revision",
-    overallNotes: formData.overallNotes || "",
-    savedAt: new Date().toLocaleDateString("my-MM", { dateStyle: "full" }) + " " + new Date().toLocaleTimeString(),
+    verdict: formData.finalVerdict || formData.verdict || "pending_revision",
+    overallNotes: formData.additionalNotes || formData.overallNotes || "",
+    savedAt: new Date().toLocaleDateString("my-MM", { dateStyle: "full" }) + " " + new Date().toLocaleTimeString("my-MM"),
     updatedAt: new Date().toISOString()
   };
 
@@ -171,7 +155,6 @@ export const subscribeEvaluationsFromCloud = (
   onError?: (err: any) => void
 ) => {
   const appId = getAppId();
-  const path = `artifacts/${appId}/public/data/evaluations`;
   const colRef = getEvaluationsCollectionRef();
 
   ensureAuthenticated().then(() => {

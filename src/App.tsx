@@ -61,62 +61,42 @@ interface FormDataState {
 }
 
 const initialFormState: FormDataState = {
-  bookTitle: 'အနတ္တလက္ခဏသုတ် တရားတော်နှင့် ဝိပဿနာကျင့်စဉ်',
-  authorName: 'ဘဒ္ဒန္တ ဉာဏဝံသ (မဟာဂန္ထဝါစကပဏ္ဍိတ)',
-  reviewerName: 'ဒေါက်တာ ဘဒ္ဒန္တ သီလဝံသ',
-  publishYear: 'ပထမအကြိမ်၊ ၂၀၂၆',
-  categories: ['လက်တွေ့တရားဘာဝနာ', 'ဘာသာပြန်/အဋ္ဌကထာ'],
+  bookTitle: '',
+  authorName: '',
+  reviewerName: '',
+  publishYear: '',
+  categories: [],
   mahapadesa: {
     m1: 'ကိုက်ညီ',
-    m1_note: 'သံယုတ္တနိကာယ် ခန္ဓဝဂ္ဂပါဠိတော် စာ-၆၇ နှင့် ကိုက်ညီသည်။',
+    m1_note: '',
     m2: 'ကိုက်ညီ',
-    m2_note: 'ဝိနည်းသီလသိက္ခာပုဒ်များနှင့် ညီညွတ်သည်။',
+    m2_note: '',
     m3: 'ကိုက်ညီ',
-    m3_note: 'စတုရာရိယသစ္စာ ဒေသနာတော်နှင့် လျော်ညီသည်။',
+    m3_note: '',
     m4: 'ကိုက်ညီ',
-    m4_note: 'နာမ်ရုပ် ပရမတ္ထတရားများ ကောက်ယူမှု မှန်ကန်သည်။',
+    m4_note: '',
   },
   legal: {
     l1: 'ကင်းရှင်း',
-    l1_note: 'အဓမ္မဝါဒ ဖော်ပြချက် မပါရှိပါ။',
+    l1_note: '',
     l2: 'ကင်းရှင်း',
-    l2_note: 'မဟန အဖွဲ့၏ ဝိနိစ္ဆယ ဆုံးဖြတ်ချက်များနှင့် ညီညွတ်သည်။',
+    l2_note: '',
     l3: 'ကင်းရှင်း',
-    l3_note: 'သံဃာ့ညီညွတ်ရေး ထိခိုက်မှု မရှိပါ။',
+    l3_note: '',
     l4: 'ကင်းရှင်း',
-    l4_note: 'ဒိဋ္ဌိ ၆၂ ပါး အယူလွဲများ ကင်းရှင်းသည်။',
+    l4_note: '',
     l5: 'ကင်းရှင်း',
-    l5_note: 'သာသနာရေး မူဝါဒများနှင့် ကိုက်ညီသည်။',
+    l5_note: '',
   },
   citationStatus: 'တိကျသည်',
   paliGrammar: 'မှန်ကန်သည်',
-  paliGrammarNote: 'ပါဠိတော် အသံထွက်နှင့် အက္ခရာဝလိ တိကျမှန်ကန်သည်။',
-  corrections: [
-    {
-      id: '1',
-      page: 'စာ-၄၅',
-      original: 'ခန္ဓာ ၅ ပါးသည် နိစ္စ သုခ ဖြစ်သည်',
-      edit: 'ခန္ဓာ ၅ ပါးသည် အနိစ္စ ဒုက္ခ ဖြစ်သည် (ပြင်ရန်)',
-    },
-    {
-      id: '2',
-      page: 'စာ-၁၁၂',
-      original: 'မဂ္ဂင် ၇ ပါး',
-      edit: 'မဂ္ဂင် ၈ ပါး (အက္ခရာ အကျကျန် ပြင်ရန်)',
-    },
-    {
-      id: '3',
-      page: 'စာ-၁၈၉',
-      original: 'သံယုတ္တနိကာယ် တွဲ-၂ စာ-၄၅',
-      edit: 'သံယုတ္တနိကာယ် ခန္ဓဝဂ္ဂပါဠိတော် စာ-၆၇ သို့ ကျမ်းကိုး ပြင်ဆင်ရန်',
-    },
-  ],
+  paliGrammarNote: '',
+  corrections: [],
   bookClass: 'Class-A',
   finalVerdict: 'အတည်ပြုသည်',
-  additionalNotes:
-    'ဤစာအုပ်သည် မဟာပဒေသ ၄ ပါး၊ သာသနာရေး ဝိနိစ္ဆယများနှင့် အပြည့်အဝ ကိုက်ညီပါသဖြင့် ပုံနှိပ်ထုတ်ဝေရန် အတည်ပြု စိစစ်ထောက်ခံပါသည်။',
-  signReviewerName: 'ဒေါက်တာ ဘဒ္ဒန္တ သီလဝံသ',
-  signDepartment: 'ဓမ္မစိစစ်ရေးအဖွဲ့ ပညာရှင်',
+  additionalNotes: '',
+  signReviewerName: '',
+  signDepartment: '',
   signDate: new Date().toISOString().split('T')[0],
 };
 
@@ -148,24 +128,22 @@ export default function App() {
   const [currentCloudRecordId, setCurrentCloudRecordId] = useState<string | null>(null);
   const [cloudSearchQuery, setCloudSearchQuery] = useState<string>('');
 
-  // Subscribe to Cloud evaluations on drawer open
+  // Subscribe to Cloud evaluations on mount
   useEffect(() => {
-    if (showCloudDrawer) {
-      setIsLoadingCloudRecords(true);
-      const unsubscribe = subscribeEvaluationsFromCloud(
-        (records) => {
-          setSavedRecords(records);
-          setIsLoadingCloudRecords(false);
-        },
-        () => {
-          setIsLoadingCloudRecords(false);
-        }
-      );
-      return () => {
-        if (typeof unsubscribe === 'function') (unsubscribe as () => void)();
-      };
-    }
-  }, [showCloudDrawer]);
+    setIsLoadingCloudRecords(true);
+    const unsubscribe = subscribeEvaluationsFromCloud(
+      (records) => {
+        setSavedRecords(records);
+        setIsLoadingCloudRecords(false);
+      },
+      () => {
+        setIsLoadingCloudRecords(false);
+      }
+    );
+    return () => {
+      if (typeof unsubscribe === 'function') (unsubscribe as () => void)();
+    };
+  }, []);
 
   const handleSaveToCloud = async () => {
     setIsSavingToCloud(true);
