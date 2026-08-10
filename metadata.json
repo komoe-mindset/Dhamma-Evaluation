@@ -1,0 +1,6 @@
+{
+  "name": "Dhamma Book Review System",
+  "description": "Dhamma Book Review & Canonical Evaluation System (ဓမ္မစာအုပ် မှတ်ကျောက်တင် စိစစ်ရေးစနစ်) for Theravada Buddhist scholars and reviewers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

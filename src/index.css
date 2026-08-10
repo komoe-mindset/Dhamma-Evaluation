@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Padauk', 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    line-height: 1.8;
+  }
+}
+
+/* Senior Font Scaling Dynamics */
+.font-scale-normal {
+  font-size: 16px;
+}
+.font-scale-large {
+  font-size: 19px;
+}
+.font-scale-xlarge {
+  font-size: 22px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt !important;
+    line-height: 1.5 !important;
+  }
+  .print-shadow-none {
+    box-shadow: none !important;
+    border: 1px solid #94a3b8 !important;
+  }
+  input, textarea, select {
+    border: none !important;
+    background: transparent !important;
+    appearance: none;
+    resize: none;
+    padding: 0 !important;
+    font-weight: bold !important;
+  }
+  .print-border-b {
+    border-bottom: 1.5px dashed #475569 !important;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 6px;
+}
+
+/* Senior Touch Target Scale */
+.senior-input-scale {
+  transform: scale(1.25);
+}
+
