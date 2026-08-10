@@ -11,40 +11,13 @@
 
 /* Senior Font Scaling Dynamics */
 .font-scale-normal {
-  font-size: 16px;
+  font-size: 15px;
 }
 .font-scale-large {
-  font-size: 19px;
+  font-size: 18px;
 }
 .font-scale-xlarge {
-  font-size: 22px;
-}
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-    font-size: 12pt !important;
-    line-height: 1.5 !important;
-  }
-  .print-shadow-none {
-    box-shadow: none !important;
-    border: 1px solid #94a3b8 !important;
-  }
-  input, textarea, select {
-    border: none !important;
-    background: transparent !important;
-    appearance: none;
-    resize: none;
-    padding: 0 !important;
-    font-weight: bold !important;
-  }
-  .print-border-b {
-    border-bottom: 1.5px dashed #475569 !important;
-  }
+  font-size: 21px;
 }
 
 /* Custom Scrollbar */
@@ -62,3 +35,59 @@
   transform: scale(1.25);
 }
 
+.print-only {
+  display: none;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 12mm 15mm 12mm 15mm;
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .print-page-break {
+    page-break-before: always;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th, td {
+    border: 1px solid #1e293b !important;
+    padding: 6px 8px !important;
+  }
+
+  .print-header-banner {
+    border-bottom: 2px solid #000 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+  }
+}
